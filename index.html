@@ -16,6 +16,9 @@
 	<!--FontAwesome-->
 	<script src="https://kit.fontawesome.com/f4651c1df1.js" crossorigin="anonymous"></script>
 
+	<!--Security-->
+	<script src="https://www.google.com/recaptcha/enterprise.js?render=6LfjxLYpAAAAALzRD09qS0eMj_0ZqfW5MbVhnwN6"></script>
+	<!-- Your code -->
 
 </head>
 <body>
@@ -143,6 +146,16 @@
 
 
 
+
+	<!--Security-->
+	<script>
+		function onClick(e) {
+		  e.preventDefault();
+		  grecaptcha.enterprise.ready(async () => {
+			const token = await grecaptcha.enterprise.execute('6LfjxLYpAAAAALzRD09qS0eMj_0ZqfW5MbVhnwN6', {action: 'LOGIN'});
+		  });
+		}
+	  </script>
 
 	<!--Leaderboard-->
 	<script type="module">
