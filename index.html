@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Date Guessr</title>
+
+	<link rel="icon" type="image/x-icon" href="/icon_png.png">
+	<link rel="stylesheet" href="/style.css">
+
+	<!--Fonts-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+	<!--FontAwesome-->
+	<script src="https://kit.fontawesome.com/f4651c1df1.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+	<h1>DATE GUESSR</h1>
+	<h4>Guess the day of the week! </h4>
+
+
+	<div id="main">
+
+		<div id="game">
+
+			<p id="dateHolder">13 juillet 2006</p>
+
+			<div id="datesOptions">
+				<ul>
+					<a class="options button" onclick="guess(1);">Lundi</a>
+					<a class="options button" onclick="guess(2);">Mardi</a>
+					<a class="options button" onclick="guess(3);">Mercredi</a>
+				</ul>
+				
+				<ul>
+					<a class="options button" onclick="guess(4);">Jeudi</a>
+					<a class="options button" onclick="guess(5);">Vendredi</a>
+					<a class="options button" onclick="guess(6);">Samedi</a>
+				</ul>
+				<ul>
+					<a class="options button" onclick="guess(0);">Dimanche</a>
+				</ul>
+		
+			</div>
+
+		</div>
+
+		<div id="resultsPanel">
+
+			<p id="resultsText">Results arriving..</p>
+			<p id="dayResult">Jeudi</p>
+			<p id="explanation">Explanation:</p>
+
+			<a class="button" onclick="newGame();">Suivant</a>
+
+		</div>
+
+
+
+
+	</div>
+
+	<footer>Made by <a class="link" href="https://jules-ptv.github.io">Jules Poitevin</a>, ©<a id="year">2024</a> </footer>
+	<script>
+		document.getElementById("year").innerHTML= (new Date()).getFullYear();
+	</script>
+
+
+	
+
+
+	<script>
+		const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+		let text = document.getElementById("dateHolder");
+		let game = document.getElementById("game");
+		let resultsPanel = document.getElementById("resultsPanel");
+
+		start = new Date(1900, 0, 1)
+		end = new Date(2100,0,1)
+		let d = randomDate(start,end);
+
+		function randomDate(start, end) {
+			return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+		}
+		
+		newGame();
+
+
+		function newGame(){
+			
+			d = randomDate(start,end);
+			text.innerHTML = d.toLocaleDateString("fr-FR",{year:"numeric",month:"numeric","day":"numeric"});
+
+			console.log("Just disabled the results");
+			resultsPanel.style.display="none";
+			game.style.display="flex";
+
+
+			console.log(d);
+			console.log(days[d.getDay()]);
+		}
+		
+
+		function guess(n) {
+
+			if(d.getDay()==n){
+				console.log("Yay! It was a ",days[n]);
+
+				openResults(1);
+			} else{
+				openResults(0);
+			}
+			
+		}
+		
+
+		function openResults(result){
+			let resultsText = document.getElementById("resultsText");
+			let dayResult = document.getElementById("dayResult");
+			dayResult.innerHTML=days[d.getDay()];
+			if(result==1){
+				resultsText.innerHTML="CORRECT!";
+				resultsText.style="color:green;"
+			} else{
+				resultsText.innerHTML="MAUVAISE RÉPONSE";
+				resultsText.style="color:red;"
+			}
+
+
+			game.hidden=true;
+			game.style.display="none";
+			console.log("Just hid the game panel!");
+			resultsPanel.style.display="flex";
+
+
+		}
+
+	</script>
+
+
+
+
+	<!--Leaderboard-->
+	<script type="module">
+		// Import the functions you need from the SDKs you need
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+		import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+		// TODO: Add SDKs for Firebase products that you want to use
+		// https://firebase.google.com/docs/web/setup#available-libraries
+	  
+		// Your web app's Firebase configuration
+		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+		const firebaseConfig = {
+		  apiKey: "AIzaSyAzTS2rQGJuS96PwXbaT6T_V6or2YKCBTw",
+		  authDomain: "date-guessr.firebaseapp.com",
+		  projectId: "date-guessr",
+		  storageBucket: "date-guessr.appspot.com",
+		  messagingSenderId: "664905786586",
+		  appId: "1:664905786586:web:d0a728e9cdb4d4e0cc71e3",
+		  measurementId: "G-99SCCGM4CV"
+		};
+	  
+		// Initialize Firebase
+		const app = initializeApp(firebaseConfig);
+		const analytics = getAnalytics(app);
+	  </script>
+</body>
+</html>
