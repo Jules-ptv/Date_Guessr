@@ -13,12 +13,10 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-	<!--FontAwesome-->
-	<script src="https://kit.fontawesome.com/f4651c1df1.js" crossorigin="anonymous"></script>
 
-	<!--Security-->
+	<!--Security
 	<script src="https://www.google.com/recaptcha/enterprise.js?render=6LfjxLYpAAAAALzRD09qS0eMj_0ZqfW5MbVhnwN6"></script>
-	<!-- Your code -->
+	-->
 
 </head>
 <body>
@@ -148,38 +146,48 @@
 
 
 	<!--Security-->
-	<script>
+	<!--<script>
 		function onClick(e) {
 		  e.preventDefault();
 		  grecaptcha.enterprise.ready(async () => {
 			const token = await grecaptcha.enterprise.execute('6LfjxLYpAAAAALzRD09qS0eMj_0ZqfW5MbVhnwN6', {action: 'LOGIN'});
 		  });
 		}
-	  </script>
+	  </script>-->
 
 	<!--Leaderboard-->
+
+
 	<script type="module">
-		// Import the functions you need from the SDKs you need
-		import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-		import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
-		// TODO: Add SDKs for Firebase products that you want to use
-		// https://firebase.google.com/docs/web/setup#available-libraries
-	  
+
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+  		
+  		import { getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
+
 		// Your web app's Firebase configuration
 		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 		const firebaseConfig = {
-		  apiKey: "AIzaSyAzTS2rQGJuS96PwXbaT6T_V6or2YKCBTw",
-		  authDomain: "date-guessr.firebaseapp.com",
-		  projectId: "date-guessr",
-		  storageBucket: "date-guessr.appspot.com",
-		  messagingSenderId: "664905786586",
-		  appId: "1:664905786586:web:d0a728e9cdb4d4e0cc71e3",
-		  measurementId: "G-99SCCGM4CV"
-		};
+			apiKey: "AIzaSyAzTS2rQGJuS96PwXbaT6T_V6or2YKCBTw",
+			authDomain: "date-guessr.firebaseapp.com",
+			databaseURL: "https://date-guessr-default-rtdb.europe-west1.firebasedatabase.app",
+			projectId: "date-guessr",
+			storageBucket: "date-guessr.appspot.com",
+			messagingSenderId: "664905786586",
+			appId: "1:664905786586:web:d0a728e9cdb4d4e0cc71e3",
+			measurementId: "G-99SCCGM4CV"
+			};
 	  
-		// Initialize Firebase
+		
+
 		const app = initializeApp(firebaseConfig);
-		const analytics = getAnalytics(app);
+		let database = getDatabase(app);
+		
+		console.log(database);
+
+		console.log(ref(database));
+
+		set(ref(database,'users/'+"jules"), {username:"Julio",score:42});
+
 	  </script>
 </body>
 </html>
